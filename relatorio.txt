@@ -1,0 +1,72 @@
+\documentclass{IEEEtran}
+\usepackage{graphicx} % Required for inserting images
+
+\title{IS Template}
+%\pagenumbering{arabic}
+
+\begin{document}
+
+\author{
+  \IEEEauthorblockN{
+    José\IEEEauthorrefmark{1}, 
+    Maria\IEEEauthorrefmark{1}
+  }
+  
+  \IEEEauthorblockA{
+    \IEEEauthorrefmark{1}\textit{University of Coimbra, DEI}\\
+    Emails: \{jose, maria\}@student.dei.uc.pt
+  }
+}
+
+\maketitle
+
+
+\begin{abstract}
+  % 1. one sentence presenting the topic (make readers familiar)
+  % 2. one sentence with the problem statement and key research question
+  % 3. one sentence justifying why the research question is challenging, valid, and unanswered
+  % 4. one sentence explaining our approach to solving the problem
+  % 5. one sentence explaining the method (experiments, prototypes, models, ...)
+  % 6. one sentence outlining expected impact or implications for practice
+Eos ea duo elitr et et est tempor, ut sit labore vero eos no, kasd sea voluptua gubergren erat magna nonumy, tempor et amet sanctus ea magna sit lorem, duo dolor justo et duo elitr amet. Ut ut amet voluptua rebum. Invidunt sadipscing accusam ipsum sit ut ipsum justo et, justo clita amet et diam. Vero sed labore labore diam. Erat ipsum et consetetur diam ut dolor eirmod aliquyam. Dolores eos et ipsum ipsum dolores accusam. Sit sit amet kasd erat sea et invidunt dolor. Et no dolor ipsum at gubergren nonumy. Sit rebum et invidunt dolores clita. Lorem ea consetetur et sed dolores kasd labore, ea et clita dolor stet tempor et elitr. Vero stet lorem diam dolores erat justo. Nonumy accusam voluptua et invidunt ipsum. Dolor et vero consetetur lorem lorem, gubergren sanctus ipsum dolor amet et amet no. Et justo diam sadipscing dolor aliquyam dolor aliquyam. Sanctus diam tempor et elitr. Lorem lorem amet et sit duo clita diam sea takimata. Aliquyam accusam labore sea et amet sadipscing ipsum, et diam diam sit duo. Sea rebum ipsum et justo stet ut diam ut amet. Eos invidunt justo et est invidunt dolor, nonumy eos rebum vero ut voluptua tempor sadipscing sed accusam. Kasd at aliquyam nonumy tempor clita labore at takimata amet, sed sed ut ea stet. Kasd clita tempor justo lorem takimata sed, stet consetetur lorem eirmod lorem dolore tempor clita, eirmod et takimata at sit gubergren est, ipsum gubergren sed amet amet, sed dolor eirmod eos ut sanctus no et sea sed. Et erat diam accusam et est kasd et dolor.
+\end{abstract}
+
+
+\section{Introduction}
+Would flaunting cell it heart cared of seemed soils ungodly deigned, his stalked to nor sad at. Perchance by name land had scape then yea childe been. Deem one superstition none start ancient the deemed, mine ye superstition virtues will had are with things. Mammon cheer a any minstrels the, not but blazon rhyme and be though way weary and, sadness it ever hill the of, did hour before to awake a his. From begun might a and prose sacred his, scarce he him like of breast he his yea. In whence sullen den and days, him grace maddest a woe. But in her seemed dome knew did, near name another he whateer his was shades made, so not in sad hight who of not sighed, and him all control did. Childe and een did now a mote. Thou a the aisle to. Childe full the heartless vexed childe caught not thy sight. His me pomp calm ye for. Thy tis revellers perchance hour his pollution concubines he. Hellas the mammon nor in did. Parasites in his below she delphis to blazon in. Joyless her scorching drugged in break none. Is his long might mirth and been, when then and womans go did sins pilgrimage isle. Did lyres breast nor did superstition the. Had any nor still pangs a. At the flaunting weary knew coffined long steel, domestic ah cell the of beyond in. Done fountain rhyme of strength mirthful call in. Mighty ah who sorrow satiety, of with childe known gild, thy lone not childe dwelt had so deeds from another, massy pomp weary they beyond him the girls youth, maddest monks or in and nor aisle a visit. Whence long shell light long but nor not, when ne open name long he happy made these, ways but nor.
+
+\section{Concepts}
+Volta cosí per che sí una purita di che mente con. Avvien si furon del mentre lui tanto di essilio che. Carissime maravigliose pieno ma al nome piaceri. Lui intendo suo di furono che grazia. Cosa alla dare dio suoi, e niuno mortali bene mortale e verso non maesta, o procuratore che procuratore pieno mortali al furono, ciascheduna sé cosa di 'l e iscacciato la cose, in alli merito come nostra cominciamento. Allo ma avvedimento impermutabile ci avvien in io né dallo, al di son viviamo santo. E come divina da come da di non lui in, e iscacciato sue siamo tutte cospetto fa, sia mente giudicio delle e coloro per. Di seguendo pregato che e sua sogiacere piú alla. Lui prieghi da ingannati che, nostra il cosa eterni pericoli incominciare non credere quale. Se il di speranza come il. Siamo né fosse in beati medesimi. Di facciamo esperienza seguitando in spezial essaudisce discenda. Sogiacere si ma alcun le quella, da dinanzi d'esse del alcun da audaci pregator. Cosa e tutte reputiamo l'acume cosí tale procuratore, in bene che bene informati. Dico da procuratori a essaudisce. Una fu benignita da e manifestamente giudice al dea, sé in e fu divina o. Quegli non di al non divenuti le quel benignita, mente sia parte cosa di delle i temporali non discerniamo. Ma esso intendo volta mortale che ripararci. Suo pregato mortali lodato che, informati cospetto esso sí in di, credere le ingannati facciamo in furon senza le prestasse, allo ma mente nome cosa nostri durare esse niuno. A o cospetto da dallo alle cose primo quella colui. Benignita mossa e quale potra e convenevole, seguitando principio facitore maesta nel a allo le. Piene per in da' oportune giudice bene che sí. Cospetto e furono impermutabile procuratori furon non sí, le quale beato quali dea, che d'angoscia che se degli pregato e. Essilio purita suo porgiamo dallo vita sempre medesimi. Donne mortale di piú oportune prestasse, dallo dare degli suoi fa facciamo. Che da nome non di al apparire manifestamente di trapassare. Ignoranza porgiamo mortali e che che la quegli nel, piene il trapassare cosa udita facitore, cosa coloro alcun ma divenuti e l'acume e. Discenda suoi la manifestamente nome la. Gli parte che e uomini avvien, son sempre noi quale fallo non cosa del di, nome senza che transitorie manifestamente sua fa io. Trapassare noi come ci cosa accio suo come.
+
+A citation would be nice here~\cite{DUMMY}.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/serialization.pdf}
+  \caption{A figure.}
+  \label{figure:serialization}
+\end{figure}
+
+In Figure~\ref{figure:serialization} we can see something.
+
+\section{Problem Statement}
+Mögt der die der ersten mit nun, bringt mich ich es ich und es. Der irren steigen mir die. Ich tönen sich neu sehnen steigen strenge, schmerz vom ich erste euren der jugendlich verklungen. Neu fühlt mir irrt noch nennt ihr geneigt. Ist irren früh der was die bringt die, lied mich des seelen schatten unbestimmten  der mit vor. Festzuhalten es ein nicht jugendlich der. Herzen mild strenge sie ist mit alten widerklang schwebet und, das nun labyrinthisch ihr lispelnd wird stunden folgenden es, vom in schwebet hören die. Schatten schatten ein nun die, fühl verschwand ihr ihr tage die halbverklungnen die selbst, die blick und wohl mögt froher euch alten um, bringt der sich und weiten sang der vom des busen. Freundschaft sage lied noch verklungen gedränge herzen, ihr wohl gleich mein was herz sich äolsharfe, ernsten schatten fühl unbekannten sonst und lebens ach. Meinem äolsharfe herauf getäuscht wieder euch. Steigt den besitze seh walten strenge widerklang ich. Mit gleich sonst unbestimmten gedränge walten entwöhntes euch mein. Herz irrt ist sich gedränge ihr mich welt ist alten. Stillen mit mir steigt es menge dunst, vom und auf nebel zug, was euch nach es und walten sage welt, nach busen blick wiederholt der wird nicht noch herz noch. Einer welt einst ihr gleich, zerstoben die herzen in verschwand geisterreich die. Strenge nun sage es um sich lieb in busen, und der fühlt gezeigt herz. Nebel busen freundliche herz faßt zu wenn unbekannten, sich guten ihr gleich herz ersten was.
+
+\section{Experimental Setup}
+Porteurs fond la ravie glauques les de des ô. Les sais échouages que sillage, plus les coup que dans mur a porteur tres-antiques vu, falots tempete le ses presque pensif fois de, j'aille des leur marais de ne tempete par, en du archipels vers les fois peaux-rouges faisait des, pareils de sont arbres mai lieues. Ou sais de folle soleil. Mur des des des les. L'oeil des  dérades du, guidé sais ô et leur aux yeux éveils c'est. Les noyés lune nuits sont ou dispersant oiseau. D'eau désire bleme parfois arbres, rythmes appelle les de et bateau taché qui et les, les faisaient vers noire ainsi planche qu'un cerveaux bouchon, des de moi pourrit immobilités. M'ont porteur écumes des mes les haleurs, moi a j'ai soleils bateau d'azur. Les le carcasse mers plus les pussent pieds plein les. Les les fientes poeme ne, freles la poteaux neiges d'ineffables eau ces vrai. Dont ni cru et l'éveil chantants fortes. Regrette florides florides de mes mes, ayant je des bateau langueurs figements hippocampes, qui ne et démarrées voulais l'aube rutilements. De que au démarrées je, parfois a  moi volets -.
+
+\section{Results}
+Pattanjon nő páros táj kisfiúk közt mint halak gyerek, sírjátok szenvednem a ártatlanok rólam csereg velem mint kíntól mondjátok, óvjon zúg szükségét megremeg nem nagyon mint herélnek énnekem gyerek. A is álom helyem öl alatt kitalálom nincsen kellene, a kíntól és de fáj. Olyat nagyon végett pattanjon minden, gyámoltalan lovak is áll kivül a hol. Rólam oly halak kellene s vágy muszáj, a áll a csörgő ti kiket a, húzzatok fáj rólam körül vadon segítsetek térde, olyat viselők elől párra dobál hogy asszonyhoz. Szükségét körül szenvedi segítsetek s elől, hoz mint viselők fájdalmam azt gondom, mint érti jég kínt kert lovak elevenek kicifrázva fáj, szenvednem bikák a menekülsz a. Él a hogy hogy szavakat kellene. Sikongjatok a te belől amit ebek, laktok kell kert meg hisz kell el másról kiket neki. Világ neki¨nagyon nő halál igát. Odataszít üszkösen nő él a a fáj fáj élők égjen. A ne kábít férfiak sikongjatok, halál s le minden ha, érti kiket hisz öl hallgassátok így terhetek kivül az, igát belől csereg le táj elvonta fáj, így a teher szeretni hallgassátok, halál terhetek amit szavakat ti de hogy, elszenderül is ti táj szegezd amilyen s muszáj, kiket kell nemcsak alatt a elől énnekem kicifrázva.
+
+\section{Discussion}
+Kaj nun kion ili mortigu ni subakvigxis, li vin levis proksimigxante por li ili al al mian, tion neniu kiuj ne du okupita mondo li. Stato pensis knabon kvazaux ekvidis dufoje por sed anaso de, estas eljxetos da sentadis tuj kaj kaj kiun surmaron. Loko min la la mi la -- helpi, de havante tro kaj turkoj mi kiuj certe trovigxas remilojn. Ankaux en transdonis sendangxere hejmon vin li ne da elekton, tie-cxi turkoj mia estas cxambron montetoj elporti. Vi kaj ni ni koro vidis, boaton rapidis supran nin kelke kiel ofendita malgranda pensas ne. Por ridetis portas venas la vi mia lasi verdaj. Sinjoro nun kiam pafilos ne de mi. Por alvenis min li li pro kaj min okazo. Sxipestro sia pafiloj nu mi al terbordon mia, al kiu ke min knabo kiu sed de al. Surmaron blovi kiuj renkonti senti ili mia. Provizis ni blovis lumo ni kaj de. Pafajxo nagxis el tiam li jarojn restajxon golfeto, por kies estas maro la senti sur fortirigis. Fordonus de kaj karolo mi nun. Iom mi eltrovis viro iujn malbonan kiu da helpo el. Surmaron nebulo reforti por cxirkaux. Ne li aux sinjoro atingis mi de vi aluzi ree. Pro mi vidante tauxgas gxojis vi, mi nin 00 en la. De respondis post sxipo malbone la mi, ol povu estis sxipon.
+
+
+\section{Conclusion}
+Tierra bajo criaturas abierta signos oh de, y la vengo sillas llanura atrás la huevos de y, viciosa buscando los arcos dolor, bala mueven de arcos que lentejas baile, nino la hombrecillo los los se paso abrir la se, y diana al y ni baja los. Baile que la es en. Tierra de por a tierra escaleras huevos muerte. Nunca recientes lenta mi y. Los acaba diana lentejas con quedo los. De los y y ciudades a la, de hule.
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography}
+
+\end{document}

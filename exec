@@ -1,0 +1,5 @@
+
+mvn clean install
+mvn exec:java -Dexec.mainClass="example.App"   
+
+java org.apache.xalan.xslt.Process -IN books.xml -XSL books.xsl -OUT books.html
