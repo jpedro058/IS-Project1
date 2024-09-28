@@ -33,15 +33,15 @@ public class App {
         return classroom;
     }
 
-    // Convert the Classroom object to JSON and write it to a file
+    // Convert the Classroom object to pretty-printed JSON and write it to a file
     private static void serializeJson(Classroom classroom, String filePath) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            // Write the JSON directly to a file
-            objectMapper.writeValue(new File(filePath), classroom);
+            // Write the pretty-printed JSON directly to a file
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), classroom);
 
             // Print confirmation message
-            System.out.println("JSON file created: " + filePath);
+            System.out.println("Formatted JSON file created: " + filePath);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,15 +62,25 @@ public class App {
         return classroom;
     }
 
-    // Convert the Classroom object to XML and write it to a file
+    // Convert the Classroom object to XML with formatting and write it to a file
     private static void serializeXML(Classroom classroom, String filePath) {
         XmlMapper xmlMapper = new XmlMapper();
+        // Enable pretty-printing for better formatting
+        xmlMapper.writerWithDefaultPrettyPrinter();
+        
         try {
-            // Write the XML directly to a file
-            xmlMapper.writeValue(new File(filePath), classroom);
+            // Create a file object to write the output
+            File file = new File(filePath);
+            
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            
+            // Serialize the Classroom object to XML and append it to the file
+            fileWriter.write(xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(classroom));
+            
+            fileWriter.close();
 
-            // Print confirmation message
-            System.out.println("XML file created: " + filePath);
+            System.out.println("Formatted XML file with declaration created: " + filePath);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,7 +188,6 @@ public class App {
                 writer.write(count + ": " + student.getName() + "," + student.getAge() + "," + student.getId());
                 writer.newLine(); // Move to the next line for each student
             }
-            System.out.println("Students and timings written to text file: " + filePath);
             System.out.println("Students written to text file: " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -251,45 +260,3 @@ public class App {
         }
     }
 }
-
-/*
- * Student s1 = new Student("Alberto", 21, "201134441110");
- * Student s2 = new Student("Patricia", 22, "201134441116");
- * Student s3 = new Student("Luis", 21, "201134441210");
- * 
- * List<Student> students = new ArrayList<>();
- * students.add(s1);
- * students.add(s2);
- * students.add(s3);
- * 
- * // --------------------------------------
- * // UTILIZANDO A BIBLIOTECA GSON
- * Gson gson = new Gson();
- * 
- * long startSerializationTime = System.nanoTime();
- * String json = gson.toJson(students); // Serialização
- * long endSerializationTime = System.nanoTime();
- * long serializationDuration = endSerializationTime - startSerializationTime;
- * 
- * System.out.println("JSON Serializado:");
- * System.out.println(json);
- * System.out.println("Tempo de Serialização (ns): " + serializationDuration);
- * 
- * Type studentListType = new TypeToken<ArrayList<Student>>() {
- * }.getType();
- * long startDeserializationTime = System.nanoTime();
- * List<Student> deserializedStudents = gson.fromJson(json, studentListType); //
- * Deserialização
- * long endDeserializationTime = System.nanoTime();
- * long deserializationDuration = endDeserializationTime -
- * startDeserializationTime;
- * 
- * System.out.println("\nObjetos Deserializados:");
- * for (Student student : deserializedStudents) {
- * System.out.println(student.getName() + " - " + student.getAge() + " - " +
- * student.getId());
- * }
- * 
- * System.out.println("Tempo de Deserialização (ns): " +
- * deserializationDuration);
- */

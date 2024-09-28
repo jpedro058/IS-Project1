@@ -1,6 +1,5 @@
 JSON:
-	10: serialization: 93.8905ms | deserialization: 13.8192ms | total: 107.7096ms
-	100: serialization: 85.7645ms | deserialization: 14.7158ms | total: 100.4804ms
+	10: serialization: 196.4366ms | deserialization: 55.4565ms | total: 251.8931ms
 XML:
-	10: serialization: 118.7245ms | deserialization: 25.4707ms | total: 144.1952ms
-	100: serialization: 117.6337ms | deserialization: 26.1919ms | total: 143.8256ms
+	10: serialization: 298.193ms | deserialization: 72.8758ms | total: 371.0688ms
+	10: serialization: 285.4773ms | deserialization: 84.6077ms | total: 370.085ms
