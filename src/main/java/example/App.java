@@ -1,6 +1,7 @@
 package example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,10 +9,16 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class App {
+    private static final String TIMES_FILE = "files/Times.txt"; // Path to the times file
+    private static DecimalFormat df = new DecimalFormat("#.####"); // Decimal format for the timings
+
     // Method for reading the students from the file
     @SuppressWarnings("unchecked")
     private static Classroom readStudentsIntoClassroom(String filePath) {
@@ -55,6 +62,112 @@ public class App {
         return classroom;
     }
 
+    // Convert the Classroom object to XML and write it to a file
+    private static void serializeXML(Classroom classroom, String filePath) {
+        XmlMapper xmlMapper = new XmlMapper();
+        try {
+            // Write the XML directly to a file
+            xmlMapper.writeValue(new File(filePath), classroom);
+
+            // Print confirmation message
+            System.out.println("XML file created: " + filePath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Deserialize XML file
+    private static Classroom deserializeXML(String filePath) {
+        XmlMapper xmlMapper = new XmlMapper();
+        Classroom classroom = null;
+        try {
+            // Read the XML file and convert it to a Classroom object
+            classroom = xmlMapper.readValue(new File(filePath), Classroom.class);
+            System.out.println("Classroom object deserialized from XML file: " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return classroom;
+    }
+
+    // Append serialization/deserialization times
+    private static void appendTimesToFile(String type, int iteration, long serializeTime, long deserializeTime,
+            long totalTime) {
+        try {
+            // Read the existing content of the Times file
+            StringBuilder content = new StringBuilder();
+            String jsonSection = "";
+            String xmlSection = "";
+
+            // Check if the file exists and read its content
+            if (Files.exists(Paths.get(TIMES_FILE))) {
+                String fileContent = new String(Files.readAllBytes(Paths.get(TIMES_FILE)));
+
+                // Split the content into JSON and XML sections if they exist
+                if (fileContent.contains("JSON:")) {
+                    jsonSection = fileContent.substring(fileContent.indexOf("JSON:"),
+                            fileContent.contains("XML:") ? fileContent.indexOf("XML:") : fileContent.length());
+                }
+                if (fileContent.contains("XML:")) {
+                    xmlSection = fileContent.substring(fileContent.indexOf("XML:"));
+                }
+            }
+
+            StringBuilder updatedSection = new StringBuilder();
+            if (type.equals("JSON")) {
+                if (jsonSection.isEmpty()) {
+                    updatedSection.append("JSON:\n");
+                } else {
+                    updatedSection.append(jsonSection);
+                }
+                updatedSection.append("\t")
+                        .append(iteration)
+                        .append(": serialization: ")
+                        .append(df.format(serializeTime / 1_000_000.0))
+                        .append("ms | deserialization: ")
+                        .append(df.format(deserializeTime / 1_000_000.0))
+                        .append("ms | total: ")
+                        .append(df.format(totalTime / 1_000_000.0))
+                        .append("ms\n");
+                jsonSection = updatedSection.toString();
+            } else if (type.equals("XML")) {
+                if (xmlSection.isEmpty()) {
+                    updatedSection.append("XML:\n");
+                } else {
+                    updatedSection.append(xmlSection);
+                }
+                updatedSection.append("\t")
+                        .append(iteration)
+                        .append(": serialization: ")
+                        .append(df.format(serializeTime / 1_000_000.0))
+                        .append("ms | deserialization: ")
+                        .append(df.format(deserializeTime / 1_000_000.0))
+                        .append("ms | total: ")
+                        .append(df.format(totalTime / 1_000_000.0))
+                        .append("ms\n");
+                xmlSection = updatedSection.toString();
+            }
+
+            // Rebuild the entire content with updated sections
+            if (!jsonSection.isEmpty()) {
+                content.append(jsonSection);
+            }
+            if (!xmlSection.isEmpty()) {
+                content.append(xmlSection);
+            }
+
+            // Write the updated content back to the file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(TIMES_FILE))) {
+                writer.write(content.toString());
+            }
+
+            System.out.println("Times appended to Times file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Method to write students from a Classroom object to a text file
     private static void writeStudentsToTextFile(Classroom classroom, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -65,6 +178,7 @@ public class App {
                 writer.write(count + ": " + student.getName() + "," + student.getAge() + "," + student.getId());
                 writer.newLine(); // Move to the next line for each student
             }
+            System.out.println("Students and timings written to text file: " + filePath);
             System.out.println("Students written to text file: " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,16 +192,43 @@ public class App {
         classroom = readStudentsIntoClassroom("input/students_" + n + ".dat");
 
         // Serialize into Json
+        long startTime = System.nanoTime();// Measure the time for serialization
         serializeJson(classroom, "files/ser_" + n + ".json");
+        long serializeTime = System.nanoTime() - startTime;
 
         // Deserialize
         Classroom result = new Classroom();
+        long startDeserializeTime = System.nanoTime(); // Measure the time for deserialization
         result = deserializeJson("files/ser_" + n + ".json");
+        long deserializeTime = System.nanoTime() - startDeserializeTime;
+
+        long totalTime = serializeTime + deserializeTime;
+
         writeStudentsToTextFile(result, "files/deser_" + n + "_json.txt");
+        appendTimesToFile("JSON", n, serializeTime, deserializeTime, totalTime);
     }
 
     private static void XML(int n) {
-        // TODO
+        Classroom classroom = new Classroom();
+
+        // Get the student list from the file
+        classroom = readStudentsIntoClassroom("input/students_" + n + ".dat");
+
+        // Serialize into XML
+        long startTime = System.nanoTime();// Measure the time for serialization
+        serializeXML(classroom, "files/ser_" + n + ".xml");
+        long serializeTime = System.nanoTime() - startTime;
+
+        // Deserialize
+        Classroom result = new Classroom();
+        long startDeserializeTime = System.nanoTime(); // Measure the time for deserialization
+        result = deserializeXML("files/ser_" + n + ".xml");
+        long deserializeTime = System.nanoTime() - startDeserializeTime;
+
+        long totalTime = serializeTime + deserializeTime;
+
+        writeStudentsToTextFile(result, "files/deser_" + n + "_xml.txt");
+        appendTimesToFile("XML", n, serializeTime, deserializeTime, totalTime);
     }
 
     public static void main(String[] args) {
@@ -95,7 +236,7 @@ public class App {
         int option = Integer.parseInt(System.console().readLine());
         System.out.println("Number of students: ");
         int n = Integer.parseInt(System.console().readLine());
-        
+
         switch (option) {
             case 1:
                 JSON(n);
@@ -104,46 +245,51 @@ public class App {
             case 2:
                 XML(n);
                 break;
-        
+
             default:
                 break;
         }
-
-        /* Student s1 = new Student("Alberto", 21, "201134441110");
-        Student s2 = new Student("Patricia", 22, "201134441116");
-        Student s3 = new Student("Luis", 21, "201134441210");
-
-        List<Student> students = new ArrayList<>();
-        students.add(s1);
-        students.add(s2);
-        students.add(s3);
-
-        // --------------------------------------
-        // UTILIZANDO A BIBLIOTECA GSON
-        Gson gson = new Gson();
-
-        long startSerializationTime = System.nanoTime();
-        String json = gson.toJson(students); // Serialização
-        long endSerializationTime = System.nanoTime();
-        long serializationDuration = endSerializationTime - startSerializationTime;
-
-        System.out.println("JSON Serializado:");
-        System.out.println(json);
-        System.out.println("Tempo de Serialização (ns): " + serializationDuration);
-
-        Type studentListType = new TypeToken<ArrayList<Student>>() {
-        }.getType();
-        long startDeserializationTime = System.nanoTime();
-        List<Student> deserializedStudents = gson.fromJson(json, studentListType); // Deserialização
-        long endDeserializationTime = System.nanoTime();
-        long deserializationDuration = endDeserializationTime - startDeserializationTime;
-
-        System.out.println("\nObjetos Deserializados:");
-        for (Student student : deserializedStudents) {
-            System.out.println(student.getName() + " - " + student.getAge() + " - " + student.getId());
-        }
-
-        System.out.println("Tempo de Deserialização (ns): " + deserializationDuration);
-        */
     }
 }
+
+/*
+ * Student s1 = new Student("Alberto", 21, "201134441110");
+ * Student s2 = new Student("Patricia", 22, "201134441116");
+ * Student s3 = new Student("Luis", 21, "201134441210");
+ * 
+ * List<Student> students = new ArrayList<>();
+ * students.add(s1);
+ * students.add(s2);
+ * students.add(s3);
+ * 
+ * // --------------------------------------
+ * // UTILIZANDO A BIBLIOTECA GSON
+ * Gson gson = new Gson();
+ * 
+ * long startSerializationTime = System.nanoTime();
+ * String json = gson.toJson(students); // Serialização
+ * long endSerializationTime = System.nanoTime();
+ * long serializationDuration = endSerializationTime - startSerializationTime;
+ * 
+ * System.out.println("JSON Serializado:");
+ * System.out.println(json);
+ * System.out.println("Tempo de Serialização (ns): " + serializationDuration);
+ * 
+ * Type studentListType = new TypeToken<ArrayList<Student>>() {
+ * }.getType();
+ * long startDeserializationTime = System.nanoTime();
+ * List<Student> deserializedStudents = gson.fromJson(json, studentListType); //
+ * Deserialização
+ * long endDeserializationTime = System.nanoTime();
+ * long deserializationDuration = endDeserializationTime -
+ * startDeserializationTime;
+ * 
+ * System.out.println("\nObjetos Deserializados:");
+ * for (Student student : deserializedStudents) {
+ * System.out.println(student.getName() + " - " + student.getAge() + " - " +
+ * student.getId());
+ * }
+ * 
+ * System.out.println("Tempo de Deserialização (ns): " +
+ * deserializationDuration);
+ */
