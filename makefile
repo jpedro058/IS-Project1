@@ -6,3 +6,6 @@ app: compile
 
 gen: compile
 	@mvn exec:java -Dexec.mainClass=example.Generator
+
+chart: compile
+	@mvn exec:java -Dexec.mainClass=example.StatisticsChart
