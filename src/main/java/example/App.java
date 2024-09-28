@@ -195,49 +195,53 @@ public class App {
     }
 
     private static void JSON(int n) {
-        Classroom classroom = new Classroom();
+        for (int i = 0; i < 10; i++) {
+            Classroom classroom = new Classroom();
 
-        // Get the student list from the file
-        classroom = readStudentsIntoClassroom("input/students_" + n + ".dat");
+            // Get the student list from the file
+            classroom = readStudentsIntoClassroom("input/students_" + n + ".dat");
 
-        // Serialize into Json
-        long startTime = System.nanoTime();// Measure the time for serialization
-        serializeJson(classroom, "files/ser_" + n + ".json");
-        long serializeTime = System.nanoTime() - startTime;
+            // Serialize into Json
+            long startTime = System.nanoTime();// Measure the time for serialization
+            serializeJson(classroom, "files/ser_" + n + ".json");
+            long serializeTime = System.nanoTime() - startTime;
 
-        // Deserialize
-        Classroom result = new Classroom();
-        long startDeserializeTime = System.nanoTime(); // Measure the time for deserialization
-        result = deserializeJson("files/ser_" + n + ".json");
-        long deserializeTime = System.nanoTime() - startDeserializeTime;
+            // Deserialize
+            Classroom result = new Classroom();
+            long startDeserializeTime = System.nanoTime(); // Measure the time for deserialization
+            result = deserializeJson("files/ser_" + n + ".json");
+            long deserializeTime = System.nanoTime() - startDeserializeTime;
 
-        long totalTime = serializeTime + deserializeTime;
+            long totalTime = serializeTime + deserializeTime;
 
-        writeStudentsToTextFile(result, "files/deser_" + n + "_json.txt");
-        appendTimesToFile("JSON", n, serializeTime, deserializeTime, totalTime);
+            writeStudentsToTextFile(result, "files/deser_" + n + "_json.txt");
+            appendTimesToFile("JSON", n, serializeTime, deserializeTime, totalTime);
+        }
     }
 
     private static void XML(int n) {
-        Classroom classroom = new Classroom();
+        for (int i = 0; i < 10; i++) {
+            Classroom classroom = new Classroom();
 
-        // Get the student list from the file
-        classroom = readStudentsIntoClassroom("input/students_" + n + ".dat");
+            // Get the student list from the file
+            classroom = readStudentsIntoClassroom("input/students_" + n + ".dat");
 
-        // Serialize into XML
-        long startTime = System.nanoTime();// Measure the time for serialization
-        serializeXML(classroom, "files/ser_" + n + ".xml");
-        long serializeTime = System.nanoTime() - startTime;
+            // Serialize into XML
+            long startTime = System.nanoTime();// Measure the time for serialization
+            serializeXML(classroom, "files/ser_" + n + ".xml");
+            long serializeTime = System.nanoTime() - startTime;
 
-        // Deserialize
-        Classroom result = new Classroom();
-        long startDeserializeTime = System.nanoTime(); // Measure the time for deserialization
-        result = deserializeXML("files/ser_" + n + ".xml");
-        long deserializeTime = System.nanoTime() - startDeserializeTime;
+            // Deserialize
+            Classroom result = new Classroom();
+            long startDeserializeTime = System.nanoTime(); // Measure the time for deserialization
+            result = deserializeXML("files/ser_" + n + ".xml");
+            long deserializeTime = System.nanoTime() - startDeserializeTime;
 
-        long totalTime = serializeTime + deserializeTime;
+            long totalTime = serializeTime + deserializeTime;
 
-        writeStudentsToTextFile(result, "files/deser_" + n + "_xml.txt");
-        appendTimesToFile("XML", n, serializeTime, deserializeTime, totalTime);
+            writeStudentsToTextFile(result, "files/deser_" + n + "_xml.txt");
+            appendTimesToFile("XML", n, serializeTime, deserializeTime, totalTime);
+        }
     }
 
     public static void main(String[] args) {
