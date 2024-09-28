@@ -58,7 +58,7 @@ public class App {
     // Method to write students from a Classroom object to a text file
     private static void writeStudentsToTextFile(Classroom classroom, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            long count = 0; // Counter for numbering students
+            int count = 0; // Counter for numbering students
             for (Student student : classroom.getStudents()) {
                 count++;
                 // Writing student details in a comma-separated format with a count prefix
@@ -71,20 +71,43 @@ public class App {
         }
     }
 
-    public static void main(String[] args) {
+    private static void JSON(int n) {
         Classroom classroom = new Classroom();
 
         // Get the student list from the file
-        classroom = readStudentsIntoClassroom("input/students_10.dat");
+        classroom = readStudentsIntoClassroom("input/students_" + n + ".dat");
 
         // Serialize into Json
-        serializeJson(classroom, "files/serialized_10.json");
+        serializeJson(classroom, "files/ser_" + n + ".json");
 
         // Deserialize
         Classroom result = new Classroom();
-        result = deserializeJson("files/serialized_10.json");
-        writeStudentsToTextFile(result, "files/deserialized_10.txt");
+        result = deserializeJson("files/ser_" + n + ".json");
+        writeStudentsToTextFile(result, "files/deser_" + n + "_json.txt");
+    }
+
+    private static void XML(int n) {
+        // TODO
+    }
+
+    public static void main(String[] args) {
+        System.out.println("1: JSON | 2: XML");
+        int option = Integer.parseInt(System.console().readLine());
+        System.out.println("Number of students: ");
+        int n = Integer.parseInt(System.console().readLine());
         
+        switch (option) {
+            case 1:
+                JSON(n);
+                break;
+
+            case 2:
+                XML(n);
+                break;
+        
+            default:
+                break;
+        }
 
         /* Student s1 = new Student("Alberto", 21, "201134441110");
         Student s2 = new Student("Patricia", 22, "201134441116");

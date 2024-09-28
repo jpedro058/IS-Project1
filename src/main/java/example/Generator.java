@@ -35,7 +35,9 @@ public class Generator {
 
     public static void main(String[] args) {
       List<Student> students = new ArrayList<>();
-      students = generateRandomStudents(10);
-      writeStudentsToObjectFile(students, "input/students_10.dat");
+      System.out.println("Number of students: ");
+      int n = Integer.parseInt(System.console().readLine());
+      students = generateRandomStudents(n);
+      writeStudentsToObjectFile(students, "input/students_" + n + ".dat");
     }
 }

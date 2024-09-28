@@ -1,12 +1,11 @@
 package example;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "class")
-public class Classroom implements Serializable{
+public class Classroom {
    private ArrayList<Student> students;
 
    public Classroom() {
