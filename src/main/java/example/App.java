@@ -37,11 +37,16 @@ public class App {
     private static void serializeJson(Classroom classroom, String filePath) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            // Write the pretty-printed JSON directly to a file
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), classroom);
+            // Serialize to JSON string first
+            String jsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(classroom);
+            // Write to file
+            Files.write(Paths.get(filePath), jsonString.getBytes());
+
+            // Calculate file size
+            long fileSize = jsonString.getBytes().length;
 
             // Print confirmation message
-            System.out.println("Formatted JSON file created: " + filePath);
+            System.out.println("Formatted JSON file created: " + filePath + " | Size: " + fileSize + " bytes");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,20 +72,35 @@ public class App {
         XmlMapper xmlMapper = new XmlMapper();
         // Enable pretty-printing for better formatting
         xmlMapper.writerWithDefaultPrettyPrinter();
-        
-        try {
-            // Create a file object to write the output
-            File file = new File(filePath);
-            
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            
-            // Serialize the Classroom object to XML and append it to the file
-            fileWriter.write(xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(classroom));
-            
-            fileWriter.close();
 
-            System.out.println("Formatted XML file with declaration created: " + filePath);
+        try {
+            /*
+             * // Create a file object to write the output
+             * File file = new File(filePath);
+             * 
+             * FileWriter fileWriter = new FileWriter(file);
+             * fileWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+             * 
+             * // Serialize the Classroom object to XML and append it to the file
+             * fileWriter.write(xmlMapper.writerWithDefaultPrettyPrinter().
+             * writeValueAsString(classroom));
+             * 
+             * fileWriter.close();
+             * 
+             * 
+             * 
+             * System.out.println("Formatted XML file with declaration created: " +
+             * filePath);
+             */
+            String xmlString = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(classroom);
+
+            // Write to file
+            Files.write(Paths.get(filePath), xmlString.getBytes());
+
+            // Calculate file size
+            long fileSize = xmlString.getBytes().length;
+
+            System.out.println("Formatted XML file created: " + filePath + " | Size: " + fileSize + " bytes");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -103,7 +123,7 @@ public class App {
 
     // Append serialization/deserialization times
     private static void appendTimesToFile(String type, int iteration, long serializeTime, long deserializeTime,
-            long totalTime) {
+            long totalTime, long fileSize) {
         try {
             // Read the existing content of the Times file
             StringBuilder content = new StringBuilder();
@@ -139,7 +159,9 @@ public class App {
                         .append(df.format(deserializeTime / 1_000_000.0))
                         .append("ms | total: ")
                         .append(df.format(totalTime / 1_000_000.0))
-                        .append("ms\n");
+                        .append("ms | size: ")
+                        .append(fileSize)
+                        .append(" bytes\n");
                 jsonSection = updatedSection.toString();
             } else if (type.equals("XML")) {
                 if (xmlSection.isEmpty()) {
@@ -155,7 +177,9 @@ public class App {
                         .append(df.format(deserializeTime / 1_000_000.0))
                         .append("ms | total: ")
                         .append(df.format(totalTime / 1_000_000.0))
-                        .append("ms\n");
+                        .append("ms | size: ")
+                        .append(fileSize)
+                        .append(" bytes\n");
                 xmlSection = updatedSection.toString();
             }
 
@@ -214,8 +238,10 @@ public class App {
 
             long totalTime = serializeTime + deserializeTime;
 
+            // Get file size for logging
+            long fileSize = new File("files/ser_" + n + ".json").length();
             writeStudentsToTextFile(result, "files/deser_" + n + "_json.txt");
-            appendTimesToFile("JSON", n, serializeTime, deserializeTime, totalTime);
+            appendTimesToFile("JSON", n, serializeTime, deserializeTime, totalTime, fileSize);
         }
     }
 
@@ -239,8 +265,10 @@ public class App {
 
             long totalTime = serializeTime + deserializeTime;
 
+            // Get file size for logging
+            long fileSize = new File("files/ser_" + n + ".xml").length();
             writeStudentsToTextFile(result, "files/deser_" + n + "_xml.txt");
-            appendTimesToFile("XML", n, serializeTime, deserializeTime, totalTime);
+            appendTimesToFile("XML", n, serializeTime, deserializeTime, totalTime, fileSize);
         }
     }
 

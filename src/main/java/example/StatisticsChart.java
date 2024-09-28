@@ -1,5 +1,6 @@
 package example;
 
+import javax.swing.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -11,38 +12,52 @@ import org.jfree.ui.RefineryUtilities;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-import java.util.HashMap;
 import java.util.Map;
-
-import java.util.Arrays;
+import java.util.TreeMap;
 
 public class StatisticsChart extends ApplicationFrame {
 
     private static final String TIMES_FILE = "files/Times.txt";
 
+    // Updated constructor
     public StatisticsChart(String applicationTitle, String chartTitle) {
         super(applicationTitle);
 
-        // Create dataset
-        JFreeChart barChart = ChartFactory.createBarChart(
-                chartTitle,
+        // Create a tabbed pane to hold the two charts
+        JTabbedPane tabbedPane = new JTabbedPane();
+
+        // Create the time dataset and chart
+        JFreeChart timeBarChart = ChartFactory.createBarChart(
+                chartTitle, // Use the passed chart title
                 "Iteration",
                 "Time (ms)",
-                createDataset(),
+                createTimeDataset(),
                 PlotOrientation.VERTICAL,
                 true, true, false);
 
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(800, 600));
-        setContentPane(chartPanel);
+        ChartPanel timeChartPanel = new ChartPanel(timeBarChart);
+        tabbedPane.addTab("Time Statistics", timeChartPanel); // Add time chart to tabbed pane
+
+        // Create the size dataset and chart
+        JFreeChart sizeBarChart = ChartFactory.createBarChart(
+                "File Size Comparison",
+                "Iteration",
+                "Size (bytes)",
+                createSizeDataset(),
+                PlotOrientation.VERTICAL,
+                true, true, false);
+
+        ChartPanel sizeChartPanel = new ChartPanel(sizeBarChart);
+        tabbedPane.addTab("File Size Statistics", sizeChartPanel); // Add size chart to tabbed pane
+
+        // Set the tabbed pane as the content pane
+        setContentPane(tabbedPane);
     }
 
-    private DefaultCategoryDataset createDataset() {
+    private DefaultCategoryDataset createTimeDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        // Separate maps for JSON and XML
-        Map<Integer, double[]> jsonAggregationMap = new HashMap<>();
-        Map<Integer, double[]> xmlAggregationMap = new HashMap<>();
+        Map<Integer, double[]> jsonAggregationMap = new TreeMap<>();
+        Map<Integer, double[]> xmlAggregationMap = new TreeMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(TIMES_FILE))) {
             String line;
@@ -50,86 +65,138 @@ public class StatisticsChart extends ApplicationFrame {
             int iteration;
 
             while ((line = br.readLine()) != null) {
-                line = line.trim(); // Remove leading/trailing whitespace
+                line = line.trim();
 
-                // Check if the line indicates a new section (JSON or XML)
                 if (line.startsWith("JSON:")) {
                     currentType = "JSON";
-                    continue; // Skip to the next iteration
+                    continue;
                 } else if (line.startsWith("XML:")) {
                     currentType = "XML";
-                    continue; // Skip to the next iteration
+                    continue;
                 } else if (line.isEmpty()) {
-                    continue; // Skip empty lines
+                    continue;
                 }
 
-                // Parse the timing information
-                String[] parts = line.split(":", 2); // Split on the first colon only
+                String[] parts = line.split(":", 2);
                 if (parts.length < 2) {
                     System.out.println("Skipping line due to unexpected format: " + line);
-                    continue; // Skip if there are not enough parts
+                    continue;
                 }
 
                 try {
                     iteration = Integer.parseInt(parts[0].trim());
-                    System.out.println("iteration: " + iteration); // Print iteration
+                    String timingDetailsPart = parts[1].trim();
+                    String[] timingDetails = timingDetailsPart.split("\\|");
 
-                    // Get timing details after the first colon
-                    String timingDetailsPart = parts[1].trim(); // Everything after the first colon
-                    String[] timingDetails = timingDetailsPart.split("\\|"); // Split by "|"
-                    System.out.println("timing details: " + Arrays.toString(timingDetails)); // Print timing details
-
-                    // Check if the timingDetails array has enough elements
                     if (timingDetails.length < 2) {
                         System.out.println("Skipping line due to missing timing details: " + line);
-                        continue; // Skip if timing details are missing
+                        continue;
                     }
 
-                    // Extract serialization and deserialization times
                     double serializationTime = Double
                             .parseDouble(timingDetails[0].split(":")[1].trim().replace("ms", "").trim());
                     double deserializationTime = Double
                             .parseDouble(timingDetails[1].split(":")[1].trim().replace("ms", "").trim());
 
-                    // Choose the appropriate aggregation map based on currentType
                     Map<Integer, double[]> aggregationMap = currentType.equals("JSON") ? jsonAggregationMap
                             : xmlAggregationMap;
 
-                    // Aggregate the times for the same iteration
-                    aggregationMap.putIfAbsent(iteration, new double[3]); // [serializationSum, deserializationSum,
-                                                                          // count]
+                    aggregationMap.putIfAbsent(iteration, new double[3]);
                     double[] sums = aggregationMap.get(iteration);
-                    sums[0] += serializationTime; // Sum of serialization times
-                    sums[1] += deserializationTime; // Sum of deserialization times
-                    sums[2] += 1; // Count of occurrences for this iteration
+                    sums[0] += serializationTime; // Sum serialization time
+                    sums[1] += deserializationTime; // Sum deserialization time
+                    sums[2] += 1; // Count
 
                 } catch (NumberFormatException e) {
                     System.out.println("Error parsing numbers from line: " + line);
                 }
             }
 
-            // calculate the average and add to the dataset for JSON
+            // Add averages for JSON
             for (Map.Entry<Integer, double[]> entry : jsonAggregationMap.entrySet()) {
                 int iter = entry.getKey();
                 double[] sums = entry.getValue();
-                double avgSerializationTime = sums[0] / sums[2]; // Average serialization time
-                double avgDeserializationTime = sums[1] / sums[2]; // Average deserialization time
-
-                // Add values to the dataset
-                dataset.addValue(avgSerializationTime, "Serialization (JSON)", "Iteration " + iter);
-                dataset.addValue(avgDeserializationTime, "Deserialization (JSON)", "Iteration " + iter);
+                dataset.addValue(sums[0] / sums[2], "Serialization (JSON)", Integer.toString(iter));
+                dataset.addValue(sums[1] / sums[2], "Deserialization (JSON)", Integer.toString(iter));
             }
 
-            // calculate the average and add to the dataset for XML
+            // Add averages for XML
             for (Map.Entry<Integer, double[]> entry : xmlAggregationMap.entrySet()) {
                 int iter = entry.getKey();
                 double[] sums = entry.getValue();
-                double avgSerializationTime = sums[0] / sums[2]; // Average serialization time
-                double avgDeserializationTime = sums[1] / sums[2]; // Average deserialization time
+                dataset.addValue(sums[0] / sums[2], "Serialization (XML)", Integer.toString(iter));
+                dataset.addValue(sums[1] / sums[2], "Deserialization (XML)", Integer.toString(iter));
+            }
 
-                // Add values to the dataset
-                dataset.addValue(avgSerializationTime, "Serialization (XML)", "Iteration " + iter);
-                dataset.addValue(avgDeserializationTime, "Deserialization (XML)", "Iteration " + iter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return dataset;
+    }
+
+    private DefaultCategoryDataset createSizeDataset() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        Map<Integer, Double> jsonSizeMap = new TreeMap<>();
+        Map<Integer, Double> xmlSizeMap = new TreeMap<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(TIMES_FILE))) {
+            String line;
+            String currentType = "";
+
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+
+                if (line.startsWith("JSON:")) {
+                    currentType = "JSON";
+                    continue;
+                } else if (line.startsWith("XML:")) {
+                    currentType = "XML";
+                    continue;
+                } else if (line.isEmpty()) {
+                    continue;
+                }
+
+                String[] parts = line.split(":", 2);
+                if (parts.length < 2) {
+                    System.out.println("Skipping line due to unexpected format: " + line);
+                    continue;
+                }
+
+                try {
+                    int iteration = Integer.parseInt(parts[0].trim());
+                    String timingDetailsPart = parts[1].trim();
+
+                    // Split the timing details and size
+                    String[] timingDetails = timingDetailsPart.split("\\|");
+                    if (timingDetails.length < 3) {
+                        System.out.println("Skipping line due to missing size details: " + line);
+                        continue;
+                    }
+
+                    // Extract file size from the last element
+                    String sizeDetail = timingDetails[timingDetails.length - 1].trim(); // Get the last detail
+                    double fileSize = Double.parseDouble(sizeDetail.split(":")[1].trim().replace("bytes", "").trim());
+
+                    // Populate size map based on current type
+                    Map<Integer, Double> sizeMap = currentType.equals("JSON") ? jsonSizeMap : xmlSizeMap;
+                    sizeMap.put(iteration, fileSize);
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Error parsing numbers from line: " + line);
+                }
+            }
+
+            // Add sizes for JSON
+            for (Map.Entry<Integer, Double> entry : jsonSizeMap.entrySet()) {
+                int iter = entry.getKey();
+                dataset.addValue(entry.getValue(), "Size (JSON)", Integer.toString(iter));
+            }
+
+            // Add sizes for XML
+            for (Map.Entry<Integer, Double> entry : xmlSizeMap.entrySet()) {
+                int iter = entry.getKey();
+                dataset.addValue(entry.getValue(), "Size (XML)", Integer.toString(iter));
             }
 
         } catch (IOException e) {
