@@ -1,16 +1,17 @@
 package example;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Student {
+public class Student implements Serializable {
     private String name;
     private int age;
     private String id;
 
-    // Default constructor (required for JAXB)
     public Student() {
     }
 
@@ -38,12 +39,17 @@ public class Student {
         this.age = age;
     }
 
-    @XmlAttribute(name = "id") // Ensure the ID is treated as an attribute
+    @XmlAttribute(name = "id")
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Student [name=" + name + ", age=" + age + ", id=" + id + "]";
     }
 }

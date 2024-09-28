@@ -1,11 +1,12 @@
 package example;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "class")
-public class Classroom {
+public class Classroom implements Serializable{
    private ArrayList<Student> students;
 
    public Classroom() {
@@ -20,4 +21,11 @@ public class Classroom {
    public void setStudents(ArrayList<Student> students) {
       this.students = students;
    }
+
+   @Override
+   public String toString() {
+      return "Classroom [students=" + students + "]";
+   }
+
+   
 }

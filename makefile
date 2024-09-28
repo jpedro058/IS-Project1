@@ -1,8 +1,8 @@
 compile:
 	@mvn clean compile
 
-run: compile
-	@mvn exec:java -Dexec.mainClass=example.JaxbExampleFruit1
+app: compile
+	@mvn exec:java -Dexec.mainClass=example.App
 
-json: compile
-	@mvn exec:java -Dexec.mainClass=example.ConvertJson
+gen: compile
+	@mvn exec:java -Dexec.mainClass=example.Generator
