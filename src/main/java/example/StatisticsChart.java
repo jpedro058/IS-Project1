@@ -101,12 +101,12 @@ public class StatisticsChart extends ApplicationFrame {
                     Map<Integer, double[]> aggregationMap = currentType.equals("JSON") ? jsonAggregationMap
                             : xmlAggregationMap;
 
-                    aggregationMap.putIfAbsent(iteration, new double[3]);
+                    aggregationMap.putIfAbsent(iteration, new double[4]); // Change array size to 4
                     double[] sums = aggregationMap.get(iteration);
                     sums[0] += serializationTime; // Sum serialization time
                     sums[1] += deserializationTime; // Sum deserialization time
                     sums[2] += 1; // Count
-
+                    sums[3] += (serializationTime + deserializationTime); // Sum total time
                 } catch (NumberFormatException e) {
                     System.out.println("Error parsing numbers from line: " + line);
                 }
@@ -118,6 +118,7 @@ public class StatisticsChart extends ApplicationFrame {
                 double[] sums = entry.getValue();
                 dataset.addValue(sums[0] / sums[2], "Serialization (JSON)", Integer.toString(iter));
                 dataset.addValue(sums[1] / sums[2], "Deserialization (JSON)", Integer.toString(iter));
+                dataset.addValue(sums[3] / sums[2], "Total Time (JSON)", Integer.toString(iter)); // Total Time for JSON
             }
 
             // Add averages for XML
@@ -126,6 +127,7 @@ public class StatisticsChart extends ApplicationFrame {
                 double[] sums = entry.getValue();
                 dataset.addValue(sums[0] / sums[2], "Serialization (XML)", Integer.toString(iter));
                 dataset.addValue(sums[1] / sums[2], "Deserialization (XML)", Integer.toString(iter));
+                dataset.addValue(sums[3] / sums[2], "Total Time (XML)", Integer.toString(iter)); // Total Time for XML
             }
 
         } catch (IOException e) {
