@@ -12,6 +12,8 @@ import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,6 +131,7 @@ public class App {
             StringBuilder content = new StringBuilder();
             String jsonSection = "";
             String xmlSection = "";
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
             // Check if the file exists and read its content
             if (Files.exists(Paths.get(TIMES_FILE))) {
@@ -152,6 +155,7 @@ public class App {
                     updatedSection.append(jsonSection);
                 }
                 updatedSection.append("\t")
+                        .append("(" + dtf.format(LocalDateTime.now()) + ") ")
                         .append(iteration)
                         .append(": serialization: ")
                         .append(df.format(serializeTime / 1_000_000.0))
@@ -170,6 +174,7 @@ public class App {
                     updatedSection.append(xmlSection);
                 }
                 updatedSection.append("\t")
+                        .append("(" + dtf.format(LocalDateTime.now()) + ") ")
                         .append(iteration)
                         .append(": serialization: ")
                         .append(df.format(serializeTime / 1_000_000.0))
