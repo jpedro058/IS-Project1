@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App {
-    private static final String TIMES_FILE = "files/Times.txt"; // Path to the times file
+    private static final String TIMES_FILE = "files/result.txt"; // Path to the times file
     private static DecimalFormat df = new DecimalFormat("#.####"); // Decimal format for the timings
 
     // Method for reading the students from the file

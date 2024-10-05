@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 public class StatisticsChart extends JFrame {
 
-    private static final String TIMES_FILE = "files/Times.txt";
+    private static final String TIMES_FILE = "files/result.txt";
     private JTabbedPane tabbedPane;
 
     public StatisticsChart(String title) {
