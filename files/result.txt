@@ -1,0 +1,12 @@
+JSON:
+ 1000: serialization: 246.0737ms | deserialization: 48.607ms | total: 294.6807ms | size: 72916 bytes
+ 1000: serialization: 221.0876ms | deserialization: 64.2772ms | total: 285.3648ms | size: 72916 bytes
+ 1000: serialization: 226.7196ms | deserialization: 59.0907ms | total: 285.8103ms | size: 72916 bytes
+ 1000: serialization: 241.9947ms | deserialization: 59.9498ms | total: 301.9445ms | size: 72916 bytes
+ 1000: serialization: 291.1899ms | deserialization: 89.5547ms | total: 380.7446ms | size: 72916 bytes
+XML:
+ 1000: serialization: 359.5817ms | deserialization: 108.2594ms | total: 467.8411ms | size: 95949 bytes
+ 1000: serialization: 301.3685ms | deserialization: 115.4493ms | total: 416.8178ms | size: 95949 bytes
+ 1000: serialization: 296.6995ms | deserialization: 99.0839ms | total: 395.7834ms | size: 95949 bytes
+ 1000: serialization: 303.9642ms | deserialization: 108.1522ms | total: 412.1164ms | size: 95949 bytes
+ 1000: serialization: 301.0714ms | deserialization: 110.6489ms | total: 411.7203ms | size: 95949 bytes
