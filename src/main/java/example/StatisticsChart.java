@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 public class StatisticsChart extends JFrame {
 
-    private static final String TIMES_FILE = "files/result.txt";
+    private static final String TIMES_FILE = "files/Times_JVM_reset.txt";
     private JTabbedPane tabbedPane;
 
     public StatisticsChart(String title) {
@@ -31,14 +31,14 @@ public class StatisticsChart extends JFrame {
 
         if (jsonMap.containsKey(iteration)) {
             double[] jsonSums = jsonMap.get(iteration);
-            dataset.addValue(jsonSums[0] / jsonSums[2], "Serialization (JSON)", "Iteration " + iteration);
-            dataset.addValue(jsonSums[1] / jsonSums[2], "Deserialization (JSON)", "Iteration " + iteration);
+            dataset.addValue(jsonSums[0] / jsonSums[2], "Serialization (JSON)", "Objects " + iteration);
+            dataset.addValue(jsonSums[1] / jsonSums[2], "Deserialization (JSON)", "Objects " + iteration);
         }
 
         if (xmlMap.containsKey(iteration)) {
             double[] xmlSums = xmlMap.get(iteration);
-            dataset.addValue(xmlSums[0] / xmlSums[2], "Serialization (XML)", "Iteration " + iteration);
-            dataset.addValue(xmlSums[1] / xmlSums[2], "Deserialization (XML)", "Iteration " + iteration);
+            dataset.addValue(xmlSums[0] / xmlSums[2], "Serialization (XML)", "Objects " + iteration);
+            dataset.addValue(xmlSums[1] / xmlSums[2], "Deserialization (XML)", "Objects " + iteration);
         }
 
         return dataset;
@@ -48,7 +48,7 @@ public class StatisticsChart extends JFrame {
         DefaultCategoryDataset dataset = createDatasetForIteration(iteration, jsonMap, xmlMap);
 
         JFreeChart barChart = ChartFactory.createBarChart(
-                "Number of items: " + iteration + " - Time Comparison",
+                "Number of objects: " + iteration + " - Time Comparison",
                 "Type",
                 "Time (ms)",
                 dataset,
@@ -56,7 +56,7 @@ public class StatisticsChart extends JFrame {
                 true, true, false);
 
         ChartPanel chartPanel = new ChartPanel(barChart);
-        tabbedPane.add("Iteration " + iteration, chartPanel);
+        tabbedPane.add("Objects " + iteration, chartPanel);
     }
 
     // New method to create the file size dataset
@@ -137,7 +137,7 @@ public class StatisticsChart extends JFrame {
 
         JFreeChart sizeChart = ChartFactory.createBarChart(
                 "File Size Statistics",
-                "Iteration",
+                "Objects",
                 "Size (bytes)",
                 dataset,
                 PlotOrientation.VERTICAL,

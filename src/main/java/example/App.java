@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App {
-    private static final String TIMES_FILE = "files/result.txt"; // Path to the times file
+    private static final String TIMES_FILE = "files/Times_JVM_reset.txt"; // Path to the times file
     private static DecimalFormat df = new DecimalFormat("#.####"); // Decimal format for the timings
 
     // Method for reading the students from the file
@@ -155,7 +155,7 @@ public class App {
                     updatedSection.append(jsonSection);
                 }
                 updatedSection.append("\t")
-                        .append("(" + dtf.format(LocalDateTime.now()) + ") ")
+                        // .append("(" + dtf.format(LocalDateTime.now()) + ") ")
                         .append(iteration)
                         .append(": serialization: ")
                         .append(df.format(serializeTime / 1_000_000.0))
@@ -174,7 +174,7 @@ public class App {
                     updatedSection.append(xmlSection);
                 }
                 updatedSection.append("\t")
-                        .append("(" + dtf.format(LocalDateTime.now()) + ") ")
+                        // .append("(" + dtf.format(LocalDateTime.now()) + ") ")
                         .append(iteration)
                         .append(": serialization: ")
                         .append(df.format(serializeTime / 1_000_000.0))
@@ -224,7 +224,6 @@ public class App {
     }
 
     private static void JSON(int n) {
-        for (int i = 0; i < 10; i++) {
             Classroom classroom = new Classroom();
 
             // Get the student list from the file
@@ -247,11 +246,9 @@ public class App {
             long fileSize = new File("files/ser_" + n + ".json").length();
             writeStudentsToTextFile(result, "files/deser_" + n + "_json.txt");
             appendTimesToFile("JSON", n, serializeTime, deserializeTime, totalTime, fileSize);
-        }
     }
 
     private static void XML(int n) {
-        for (int i = 0; i < 10; i++) {
             Classroom classroom = new Classroom();
 
             // Get the student list from the file
@@ -274,7 +271,6 @@ public class App {
             long fileSize = new File("files/ser_" + n + ".xml").length();
             writeStudentsToTextFile(result, "files/deser_" + n + "_xml.txt");
             appendTimesToFile("XML", n, serializeTime, deserializeTime, totalTime, fileSize);
-        }
     }
 
     public static void main(String[] args) {
